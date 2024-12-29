@@ -1,46 +1,103 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 #include "functions.h"
 
-// LOGIC HAM
+// Mang dong luu tru nguoi dung
+struct User* users = NULL;
+int userCount = 0; // Bien dem so luong nguoi dung
 
 // In ra Menu dau tien
-void printHello(){ 
-	int choice;
-	printf("\n   *** Bank Management System Using C++ ***\n");
-	printf("               CHOOSE YOUR ROLE \n");
-	printf("      ==============================\n");
-	printf("      [1]. Admin \n");
-	printf("      [2]. User \n");
-	printf("      [3]. Exit the Program \n");
-	printf("      ==============================\n");
+void printHello() { 
+    printf("\n   *** Bank Management System Using C ***\n");
+    printf("               CHOOSE YOUR ROLE \n");
+    printf("      ==============================\n");
+    printf("      [1]. Admin \n");
+    printf("      [2]. User \n");
+    printf("      [3]. Exit the Program \n");
+    printf("      ==============================\n");
 }
 
-// 2. Logic cua Admin khi chon vao Admin
-// In ra menu quan ly nguoi dung
-void managerMenu(){
-	printf("\n   ===== User Management System =====\n");
-    printf("           User Management Menu:\n");  // QUAN LY NGUOI DUNG ( Admin )
-    printf("       [1]. Display user list \n");  // Hien thi danh sach nguoi dung
-    printf("       [2]. Add new user\n"); // Them nguoi dung
-	printf("       [3]. Delete user\n"); // Xoa nguoi dung
-	printf("       [4]. Edit user information \n"); // Sua thong tin nguoi dung
-	printf("       [5]. Search for user\n"); // Tim kiem nguoi dung 
-	printf("       [0]. Exit\n"); // Thoat khoi chuc nang Admin
-
+// In ra menu quan li nguoi dung cho Admin
+void managerMenu() {
+    printf("\n   ===== User Management System =====\n");
+    printf("           User Management Menu:\n");
+    printf("       [1]. Display user list \n");
+    printf("       [2]. Add new user\n");
+    printf("       [3]. Delete user\n");
+    printf("       [4]. Edit user information \n");
+    printf("       [5]. Search for user\n");
+    printf("       [0]. Exit\n");
 }
 
-// Giao dien dang nhap vao che do Admin
-void adminLogin(){
-	printf("\n   *** Bank Management System Using C++ ***\n");
-	printf("                      LOGIN                   \n");
-	printf("          =================================  \n");
-	printf("          Email:                              \n");
-	printf("          Password:                            \n");
-	printf("          =================================  \n");
+// Hien thi danh sach nguoi dung
+void printUsers() {
+    if (userCount == 0) {
+        printf("No users available.\n");
+        return;
+    }
+    printf("\nUser List:\n");
+    printf("Name\t\tPhone Number\t\tEmail\t\tStatus\n");
+    for (int i = 0; i < userCount; i++) {
+        printf("%s\t\t%s\t\t%s\t\t%s\n", users[i].name, users[i].phone, users[i].email, users[i].status);
+    }
 }
 
-
-// In ra  danh sách nguoi dung
-void printUsers(){
-	
+// Them nguoi dung moi
+void addUser() {
+    // Cap phat lai bo nho cho mang users khi them nguoi dung moi
+    users = realloc(users, (userCount + 1) * sizeof(struct User));
+    if (users == NULL) {
+        printf("Memory allocation failed!\n");
+        return;
+    }
+    struct User newUser;
+    // Yeu cau nguoi dung nhap thong tin
+    printf("Enter user's name: ");
+    scanf(" %[^\n]s", newUser.name);
+    printf("Enter user's phone number: ");
+    scanf("%s", newUser.phone);
+    printf("Enter user's email: ");
+    scanf("%s", newUser.email);
+    // Mat khau mac dinh la so dien thoai
+    strcpy(newUser.password, newUser.phone);
+    // Trang thai tai khoan mac dinh la "open"
+    strcpy(newUser.status, "open");
+    // Them nguoi dung vao danh sach
+    users[userCount] = newUser;
+    userCount++;
+    printf("User added successfully!\n");
 }
+
+// Menu quan li Admin
+void adminMenu() {
+    int choiceAdmin;
+    int exitLoop = 0;
+
+    while (!exitLoop) {
+        managerMenu();
+        printf("Enter The Choice: ");
+        scanf("%d", &choiceAdmin);
+
+        switch(choiceAdmin) {
+            case 1:
+                printUsers();
+                break;
+            case 2:
+                addUser();
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 0:
+                exitLoop = 1;
+                break;
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+}
+
