@@ -37,9 +37,10 @@ void printUsers() {
         return;
     }
     printf("\nUser List:\n");
-    printf("Name\t\tPhone Number\t\tEmail\t\tStatus\n");
+    printf("Name\t|\tPhone Number\t|\tEmail\t|\tStatus\n");
     for (int i = 0; i < userCount; i++) {
-        printf("%s\t\t%s\t\t%s\t\t%s\n", users[i].name, users[i].phone, users[i].email, users[i].status);
+    	printf("-------------------------------------------------------------------------------------------\n");
+        printf("%s\t|\t%s\t|\t%s\t|\t%s\n", users[i].name, users[i].phone, users[i].email, users[i].status);
     }
 }
 
@@ -53,11 +54,13 @@ void addUser() {
     }
     struct User newUser;
     // Yeu cau nguoi dung nhap thong tin
-    printf("Enter user's name: ");
-    scanf(" %[^\n]s", newUser.name);
-    printf("Enter user's phone number: ");
+    printf("Enter user name: ");
+    getchar();
+    fgets(newUser.name, sizeof(newUser.name), stdin);
+    newUser.name[strcspn(newUser.name, "\n")] = '\0';
+    printf("Enter user phone number: ");
     scanf("%s", newUser.phone);
-    printf("Enter user's email: ");
+    printf("Enter user email: ");
     scanf("%s", newUser.email);
     // Mat khau mac dinh la so dien thoai
     strcpy(newUser.password, newUser.phone);
