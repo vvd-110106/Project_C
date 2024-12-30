@@ -3,9 +3,7 @@
 #include <string.h>
 #include "functions.h"
 
-// Mang dong luu tru nguoi dung
-struct User* users = NULL;
-int userCount = 0; // Bien dem so luong nguoi dung
+int userCount = 0;
 
 // In ra Menu dau tien
 void printHello() { 
@@ -52,7 +50,6 @@ void addUser() {
         printf("Memory allocation failed!\n");
         return;
     }
-    struct User newUser;
     // Yeu cau nguoi dung nhap thong tin
     printf("Enter user name: ");
     getchar();
@@ -62,11 +59,8 @@ void addUser() {
     scanf("%s", newUser.phone);
     printf("Enter user email: ");
     scanf("%s", newUser.email);
-    // Mat khau mac dinh la so dien thoai
     strcpy(newUser.password, newUser.phone);
-    // Trang thai tai khoan mac dinh la "open"
     strcpy(newUser.status, "open");
-    // Them nguoi dung vao danh sach
     users[userCount] = newUser;
     userCount++;
     printf("User added successfully!\n");

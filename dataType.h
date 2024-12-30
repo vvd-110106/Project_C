@@ -11,3 +11,6 @@ struct User {
 struct Date {
     int month, day, year;
 };
+
+struct User* users = NULL;
+struct User newUser;
